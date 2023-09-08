@@ -1,5 +1,6 @@
 package com.technifutur.andeval4.dbDao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -10,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ExpenseDao {
     @Query("SELECT * FROM Expense")
-    fun getAll(): List<Expense>
+    fun getAll(): LiveData<List<Expense>>
     @Query("SELECT * FROM Expense WHERE expenseId IN (:expenseIds)")
     fun loadAllByIds(expenseIds: IntArray): List<Expense>
     @Query("SELECT * FROM Expense WHERE expenseId LIKE :id LIMIT 1")

@@ -46,8 +46,10 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onResume() {
         super.onResume()
-        // Chargez les données de la base de données à chaque fois que l'activité redevient visible
-        getExpense()
+        db.expenseDao().getAll().observeForever{
+            setupRecyclerView(it)
+        }
+
     }
     // recyclerView
     private fun setupRecyclerView(expenseList: List<Expense>) {
@@ -78,9 +80,6 @@ class MainActivity : AppCompatActivity() {
             val expTypeDao = db.expTypeDao()
             var expenses = expenseDao.getAll()
 
-            runOnUiThread {
-                setupRecyclerView(expenses)
-            }
             Log.d("TEST", "Expenes : ${expenses}")
         }
     }
