@@ -7,7 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.technifutur.andeval4.R
 import com.technifutur.andeval4.dbModel.Expense
+import java.text.DecimalFormat
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class ExpenseAdapter(private val expenses: List<Expense>) : RecyclerView.Adapter<ExpenseAdapter.ViewHolder>() {
 
@@ -25,8 +28,14 @@ class ExpenseAdapter(private val expenses: List<Expense>) : RecyclerView.Adapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val expense = expenses[position]
         holder.nameTextView.text = expense.name
-        holder.dateTextView.text = expense.date.toString()
-        holder.valueTextView.text = expense.value.toString() + "€"
+        // date formater
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(expense.date)
+        holder.dateTextView.text = formattedDate
+        //amount formater
+        val decimalFormat = DecimalFormat("0.00")
+        val formattedValue = decimalFormat.format(expense.value)
+        holder.valueTextView.text = "$formattedValue €"
     }
 
     override fun getItemCount(): Int {

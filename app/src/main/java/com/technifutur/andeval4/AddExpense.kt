@@ -26,7 +26,7 @@ class AddExpense : AppCompatActivity() {
     private lateinit var binding: ActivityAddExpenseBinding
     lateinit var db: DataBase
     var date: Date = Date()
-    //val editTypeText = binding.editTypeText
+    private lateinit var editTypeText: TextView
     private val expenseTypes = arrayOf("Food", "Tax", "Car")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +43,7 @@ class AddExpense : AppCompatActivity() {
             .build()
 
         editDateText = binding.editDateText
+        editTypeText = binding.editTypeText
 
         val saveBtn = binding.saveButton
         saveBtn.setOnClickListener {
@@ -62,11 +63,10 @@ class AddExpense : AppCompatActivity() {
             showDatePickerDialog()
         }
 
-
         // Gérer le clic sur le champ de type de dépense
-        //editTypeText.setOnClickListener {
-            //showExpenseTypeDialog()
-        //}
+        editTypeText.setOnClickListener {
+            showExpenseTypeDialog()
+        }
     }
 
     // show DatePickerDialog
@@ -80,14 +80,14 @@ class AddExpense : AppCompatActivity() {
             val selectedDate = Calendar.getInstance()
             selectedDate.set(selectedYear, selectedMonth, selectedDay)
 
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val dateFormat = SimpleDateFormat("dd--MM-yyyy", Locale.getDefault())
             val formattedDate = dateFormat.format(selectedDate.time)
 
             editDateText.text = formattedDate // update textView with selected date
         }, year, month, day)
 
         datePickerDialog.show()
-    }/*
+    }
     private fun showExpenseTypeDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Select Expense Type")
@@ -100,14 +100,14 @@ class AddExpense : AppCompatActivity() {
 
         val alertDialog = builder.create()
         alertDialog.show()
-    }*/
+    }
     private fun addExpense() {
         val name = binding.editNameText.text.toString()
         val amount = binding.editAmountText.text.toString().toFloat()
         val dateStr = editDateText.text.toString()
 
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        date = dateFormat.parse(dateStr) // Convert strig to Date object
+        date = dateFormat.parse(dateStr) // Convert string to Date object
 
 
         CoroutineScope(Dispatchers.IO).launch {
