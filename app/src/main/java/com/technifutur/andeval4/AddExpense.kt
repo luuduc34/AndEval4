@@ -80,7 +80,7 @@ class AddExpense : AppCompatActivity() {
             val selectedDate = Calendar.getInstance()
             selectedDate.set(selectedYear, selectedMonth, selectedDay)
 
-            val dateFormat = SimpleDateFormat("dd--MM-yyyy", Locale.getDefault())
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val formattedDate = dateFormat.format(selectedDate.time)
 
             editDateText.text = formattedDate // update textView with selected date
