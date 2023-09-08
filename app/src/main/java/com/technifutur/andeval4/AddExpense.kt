@@ -26,7 +26,9 @@ class AddExpense : AppCompatActivity() {
     private lateinit var binding: ActivityAddExpenseBinding
     lateinit var db: DataBase
     var date: Date = Date()
+    //val editTypeText = binding.editTypeText
     private val expenseTypes = arrayOf("Food", "Tax", "Car")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddExpenseBinding.inflate(layoutInflater)
@@ -59,12 +61,12 @@ class AddExpense : AppCompatActivity() {
         editDateText.setOnClickListener {
             showDatePickerDialog()
         }
-        val editTypeText = binding.editTypeText // Champ pour le type de dépense
+
 
         // Gérer le clic sur le champ de type de dépense
-        editTypeText.setOnClickListener {
+        //editTypeText.setOnClickListener {
             //showExpenseTypeDialog()
-        }
+        //}
     }
 
     // show DatePickerDialog
@@ -85,8 +87,20 @@ class AddExpense : AppCompatActivity() {
         }, year, month, day)
 
         datePickerDialog.show()
-    }
+    }/*
+    private fun showExpenseTypeDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Select Expense Type")
 
+        builder.setItems(expenseTypes) { dialog, which ->
+            val selectedType = expenseTypes[which]
+            editTypeText.setText(selectedType) // Utilisez setText() pour définir le texte
+            dialog.dismiss() // Fermer l'alerte
+        }
+
+        val alertDialog = builder.create()
+        alertDialog.show()
+    }*/
     private fun addExpense() {
         val name = binding.editNameText.text.toString()
         val amount = binding.editAmountText.text.toString().toFloat()
