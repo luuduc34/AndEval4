@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onResume() {
         super.onResume()
+        // updated with LiveData
         db.expenseDao().getAll().observeForever{
             setupRecyclerView(it)
         }

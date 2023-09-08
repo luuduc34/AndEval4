@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ExpenseDao {
     @Query("SELECT * FROM Expense")
-    fun getAll(): LiveData<List<Expense>>
+    fun getAll(): LiveData<List<Expense>> // live update with LiveData
     @Query("SELECT * FROM Expense WHERE expenseId IN (:expenseIds)")
     fun loadAllByIds(expenseIds: IntArray): List<Expense>
     @Query("SELECT * FROM Expense WHERE expenseId LIKE :id LIMIT 1")

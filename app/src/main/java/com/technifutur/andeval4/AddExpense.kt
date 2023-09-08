@@ -47,14 +47,19 @@ class AddExpense : AppCompatActivity() {
 
         val saveBtn = binding.saveButton
         saveBtn.setOnClickListener {
+            // regex on amount
+            val amountRegex = Regex("^(\\d+(\\.\\d{1,2})?)?$")
+            val isValidAmount = amountRegex.matches(binding.editAmountText.text.toString())
+
             if (!binding.editNameText.text.toString().isEmpty()
                 && !editDateText.text.toString().isEmpty()
                 && !binding.editAmountText.text.toString().isEmpty()
+                && isValidAmount // control if numeric
             ) {
                 addExpense()
                 finish()
             } else {
-                showAlertDialog("Please fill all the form!")
+                showAlertDialog("Something's wrong...")
             }
         }
 
