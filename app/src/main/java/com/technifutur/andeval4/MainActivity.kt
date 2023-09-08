@@ -17,6 +17,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Date
+import androidx.recyclerview.widget.DividerItemDecoration
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,8 +53,10 @@ class MainActivity : AppCompatActivity() {
     private fun setupRecyclerView(expenseList: List<Expense>) {
         val recyclerView = binding.recyclerView
         val adapter = ExpenseAdapter(expenseList)
+        val dividerItemDecoration = DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL)
         recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
         recyclerView.adapter = adapter
+        recyclerView.addItemDecoration(dividerItemDecoration)
     }
 
     // call database actions in coroutines

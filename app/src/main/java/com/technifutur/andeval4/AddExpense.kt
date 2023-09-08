@@ -27,7 +27,7 @@ class AddExpense : AppCompatActivity() {
     lateinit var db: DataBase
     var date: Date = Date()
     private lateinit var editTypeText: TextView
-    private val expenseTypes = arrayOf("Food", "Tax", "Car")
+    private val expenseTypes = arrayOf("Food", "Liquor", "Tax", "Car")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +63,7 @@ class AddExpense : AppCompatActivity() {
             showDatePickerDialog()
         }
 
-        // Gérer le clic sur le champ de type de dépense
+        // clock on amountEditText
         editTypeText.setOnClickListener {
             showExpenseTypeDialog()
         }
@@ -88,14 +88,15 @@ class AddExpense : AppCompatActivity() {
 
         datePickerDialog.show()
     }
+    // show ExpenseTypeDialog
     private fun showExpenseTypeDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Select Expense Type")
 
         builder.setItems(expenseTypes) { dialog, which ->
             val selectedType = expenseTypes[which]
-            editTypeText.setText(selectedType) // Utilisez setText() pour définir le texte
-            dialog.dismiss() // Fermer l'alerte
+            editTypeText.setText(selectedType)
+            dialog.dismiss()
         }
 
         val alertDialog = builder.create()
@@ -108,7 +109,6 @@ class AddExpense : AppCompatActivity() {
 
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         date = dateFormat.parse(dateStr) // Convert string to Date object
-
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -129,7 +129,6 @@ class AddExpense : AppCompatActivity() {
         builder.setPositiveButton("OK") { dialog, which ->
             dialog.dismiss() // close dialog
         }
-
         val alertDialog: AlertDialog = builder.create()
         alertDialog.show()
     }
