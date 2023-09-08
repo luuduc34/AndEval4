@@ -1,5 +1,6 @@
 package com.technifutur.andeval4
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +19,7 @@ import kotlinx.coroutines.withContext
 import java.util.Date
 
 class MainActivity : AppCompatActivity() {
+
     val dateDuJour = Date()
     private lateinit var binding: ActivityMainBinding
     lateinit var db: DataBase
@@ -25,16 +27,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Expense database
-        val exampleConverterInstance = Converters(dateDuJour)
+        // date converter
+        val dateConverterInstance = Converters(dateDuJour)
+        // expense database
         db = Room.databaseBuilder(this, DataBase::class.java, "Expense.db")
-            .addTypeConverter(exampleConverterInstance)
+            .addTypeConverter(dateConverterInstance)
             .build()
+        // button in tab bar to add new expense
+        val addButton = binding.addButton
+        addButton.setOnClickListener {
+            val intent = Intent(this, AddExpense::class.java)
+            startActivity(intent)
+        }
 
         getExpense()
     }
-
+    override fun onResume() {
+        super.onResume()
+        // Chargez les données de la base de données à chaque fois que l'activité redevient visible
+        getExpense()
+    }
     // recyclerView
     private fun setupRecyclerView(expenseList: List<Expense>) {
         val recyclerView = binding.recyclerView
@@ -61,8 +73,6 @@ class MainActivity : AppCompatActivity() {
             val typeDao = db.typeDao()
             val expTypeDao = db.expTypeDao()
             var expenses = expenseDao.getAll()
-
-            Log.d("TEST", "Expense count : ${expenses.size}")
 
             runOnUiThread {
                 setupRecyclerView(expenses)
